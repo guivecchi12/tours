@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-export const displayMap = (locations) => {
+const displayMap = (locations) => {
   mapboxgl.accessToken =
     'pk.eyJ1IjoiZ3VpdmVjY2hpIiwiYSI6ImNsc2x5ZmV5aTBnMWEya3A2bnhrMHVhcjkifQ.0TJJTKi4yNpZGJAv3dXoTQ'
   const map = new mapboxgl.Map({
@@ -11,7 +11,7 @@ export const displayMap = (locations) => {
 
   const bounds = new mapboxgl.LngLatBounds()
 
-  tourLocations.forEach((location) => {
+  locations.forEach((location) => {
     // Create market
     const el = document.createElement('div')
     el.className = 'marker'
@@ -43,3 +43,5 @@ export const displayMap = (locations) => {
     }
   })
 }
+
+export { displayMap }

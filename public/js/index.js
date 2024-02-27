@@ -8,10 +8,11 @@ const mapBox = document.getElementById('map')
 const loginForm = document.querySelector('.form')
 const logoutBtn = document.querySelector('.nav__el--logout')
 
+console.log('mapBox', mapBox)
 // DELEGATION
 if (mapBox) {
-  const tourLocations = JSON.parse(mapBox.dataset.locations)
-  displayMap(tourLocations)
+  const locations = JSON.parse(mapBox.dataset.locations)
+  displayMap(locations)
 }
 
 if (loginForm) {
