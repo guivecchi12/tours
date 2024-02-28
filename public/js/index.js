@@ -8,7 +8,6 @@ const mapBox = document.getElementById('map')
 const loginForm = document.querySelector('.form')
 const logoutBtn = document.querySelector('.nav__el--logout')
 
-console.log('mapBox', mapBox)
 // DELEGATION
 if (mapBox) {
   const locations = JSON.parse(mapBox.dataset.locations)
@@ -23,8 +22,7 @@ if (loginForm) {
     login(email, password)
   })
 }
-console.log('INDEX')
+
 if (logoutBtn) {
-  console.log('LOGOUT BUTTON EXISTS')
   logoutBtn.addEventListener('click', logout)
 }
