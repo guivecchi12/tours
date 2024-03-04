@@ -79,17 +79,12 @@ exports.logout = (req, res) => {
 
 exports.protectRoute = catchAsync(async (req, res, next) => {
   // 1) Get token
-  let token
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer')
-  ) {
-    token = req.headers.authorization.split(' ')[1]
-  } else if (req.cookie.jwt) {
-    token = req.cookie.jwt
-  }
+  const token =
+    req.headers.authorization && req.headers.authorization.startsWith('Bearer')
+      ? req.headers.authorization.split(' ')[1]
+      : req.cookies.jwt
 
-  if (!token) {
+  if (!token || token === 'loggedOut') {
     return next(new AppError('You are not logged in', 401))
   }
 

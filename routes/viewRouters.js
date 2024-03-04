@@ -3,7 +3,8 @@ const {
   getOverview,
   getTour,
   getLoginForm,
-  getAccount
+  getAccount,
+  updateUserData
 } = require('../controllers/viewsController')
 const authController = require('../controllers/authController')
 
@@ -16,5 +17,7 @@ router.get('/tour/:slug', authController.isLoggedIn, getTour)
 router.get('/login', authController.isLoggedIn, getLoginForm)
 
 router.get('/me', authController.protectRoute, getAccount)
+
+router.post('/submit-user-data', authController.protectRoute, updateUserData)
 
 module.exports = router
