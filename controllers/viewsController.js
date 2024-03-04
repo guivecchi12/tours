@@ -35,7 +35,6 @@ exports.getLoginForm = (req, res) => {
 }
 
 exports.getAccount = (req, res) => {
-  console.log('GET ACCOUNT')
   res.status(200).render('account', { title: 'Your account' })
 }
 

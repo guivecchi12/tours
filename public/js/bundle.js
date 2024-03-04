@@ -12082,26 +12082,25 @@ var logout = exports.logout = /*#__PURE__*/function () {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
           _context2.prev = 0;
-          console.log('LOGOUT');
-          _context2.next = 4;
+          _context2.next = 3;
           return (0, _axios.default)({
             method: 'GET',
             url: '/api/v1/users/logout'
           });
-        case 4:
+        case 3:
           res = _context2.sent;
           if (res.data.status = 'success') location.reload(true);
-          _context2.next = 11;
+          _context2.next = 10;
           break;
-        case 8:
-          _context2.prev = 8;
+        case 7:
+          _context2.prev = 7;
           _context2.t0 = _context2["catch"](0);
           (0, _alerts.showAlert)('error', 'Error logging out! Try again.');
-        case 11:
+        case 10:
         case "end":
           return _context2.stop();
       }
-    }, _callee2, null, [[0, 8]]);
+    }, _callee2, null, [[0, 7]]);
   }));
   return function logout() {
     return _ref2.apply(this, arguments);
@@ -12138,21 +12137,20 @@ var updateSettings = exports.updateSettings = /*#__PURE__*/function () {
           });
         case 4:
           res = _context.sent;
-          console.log('RES ===>', res);
           if (res.data.status = 'success') {
             (0, _alerts.showAlert)('success', "".concat(type.toUpperCase(), " updated successfully"));
           }
-          _context.next = 12;
+          _context.next = 11;
           break;
-        case 9:
-          _context.prev = 9;
+        case 8:
+          _context.prev = 8;
           _context.t0 = _context["catch"](0);
           (0, _alerts.showAlert)('error', _context.t0.response.data.message);
-        case 12:
+        case 11:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 9]]);
+    }, _callee, null, [[0, 8]]);
   }));
   return function updateSettings(_x, _x2) {
     return _ref.apply(this, arguments);
@@ -12391,7 +12389,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65157" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56446" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

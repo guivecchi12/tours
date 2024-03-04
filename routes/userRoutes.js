@@ -16,7 +16,11 @@ router.use(authController.protectRoute)
 
 router.patch('/updateMyPassword', authController.updatePassword)
 router.get('/me', userController.getMe, userController.getUser)
-router.patch('/updateMe', userController.updateMe)
+router.patch(
+  '/updateMe',
+  userController.uploadUserPhoto,
+  userController.updateMe
+)
 router.delete('/deleteMe', userController.deleteMe)
 
 // Any route after this middleware will need to be logged into a ADMIN account

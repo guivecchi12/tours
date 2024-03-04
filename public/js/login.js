@@ -25,7 +25,6 @@ export const login = async (email, password) => {
 
 export const logout = async () => {
   try {
-    console.log('LOGOUT')
     const res = await axios({
       method: 'GET',
       url: '/api/v1/users/logout'
