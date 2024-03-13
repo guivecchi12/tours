@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/userModel')
 const catchAsync = require('../utils/catchAsync')
 const AppError = require('../utils/appError')
-const sendEmail = require('../utils/email')
+const Email = require('../utils/email')
 
 //todo: add maximum login attempts
 //todo: refresh tokens
@@ -47,6 +47,10 @@ exports.signup = catchAsync(async (req, res, next) => {
     passwordConfirmation: req.body.passwordConfirmation
   })
 
+  const url = `${req.protocol}://${req.get('host')}/me`
+
+  await new Email(newUser, url).sendWelcome()
+
   createSendToken(newUser, 201, res)
 })
 
@@ -60,6 +64,7 @@ exports.login = catchAsync(async (req, res, next) => {
 
   // 2) Check if user exists && password is correct
   const user = await User.findOne({ email }).select('+password')
+  console.log('user', user)
 
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError('Incorrect email/password', 401))
@@ -166,19 +171,13 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   const resetToken = user.createPasswordResetToken()
   await user.save({ validateBeforeSave: false })
 
-  // 3) Send it to user's email
-  const resetURL = `${req.protocol}://${req.get(
-    'host'
-  )}/api/v1/users/resetPassword/${resetToken}`
-
-  const message = `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to: ${resetURL}. \nIf you didn't request this, please ignore it.`
-
   try {
-    await sendEmail({
-      email: user.email,
-      subject: 'Your password reset token (valid for 10 min)',
-      message
-    })
+    // 3) Send it to user's email
+    const resetURL = `${req.protocol}://${req.get(
+      'host'
+    )}/api/v1/users/resetPassword/${resetToken}`
+
+    await new Email(user, resetURL)
 
     res.status(200).json({
       status: 'success',
@@ -188,8 +187,6 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     user.passwordResetToken = undefined
     user.passwordResetExpire = undefined
     await user.save({ validateBeforeSave: false })
-
-    // console.log(err)
 
     return next(
       new AppError(

@@ -59,7 +59,6 @@ userSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, 12)
   // Delete passwordConfirmation
   this.passwordConfirmation = undefined
-
   next()
 })
 
@@ -68,7 +67,6 @@ userSchema.pre('save', function (next) {
 
   // creating token can take a little longer, so we subtract a second to make sure this shows as before the token
   this.passwordChangedAt = Date.now() - 1000
-
   next()
 })
 
