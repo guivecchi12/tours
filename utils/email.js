@@ -13,10 +13,6 @@ module.exports = class Email {
   newTransport() {
     if (process.env.NODE_ENV === 'production') {
       // Sendgrid
-      console.log({
-        user: process.env.SENDGRID_USERNAME,
-        pass: process.env.SENDGRID_PASSWORD
-      })
       return nodemailer.createTransport({
         service: 'SendGrid',
         auth: {
