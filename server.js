@@ -9,21 +9,18 @@ process.on('uncaughtException', (err) => {
 
 const app = require('./app')
 
-const DB = process.env.DATABASE.replace(
+const URI = process.env.DATABASE.replace(
   '<PASSWORD>',
   process.env.DATABASE_PASSWORD
 )
-mongoose
-  // .connect(process.env.DATABASE_LOCAL, {}
-  .connect(DB, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-    useUnifiedTopology: true
-  })
-  .then(() => console.log('DB connection successfull!'))
 
-const port = process.env.PORT || 8000
+mongoose.connect(URI)
+
+const db = mongoose.connection
+db.on('error', console.error.bind(console, 'connection error:'))
+db.once('open', () => console.log('Connected to MongoDB'))
+
+const port = process.env.PORT || 3000
 const server = app.listen(port, () => {
   console.debug(`App running on port ${port}`)
 })

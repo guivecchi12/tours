@@ -1,4 +1,4 @@
-Deployed on Vercel: https://tours-seven-kappa.vercel.app/
+Deployed on Vercel: https://my-tours-website.vercel.app
 
 Project Description
 
