@@ -1,4 +1,4 @@
-Deployed on Vercel: https://tours-eta-olive.vercel.app/
+Deployed on Vercel: https://tours-seven-kappa.vercel.app/
 
 Project Description
 
