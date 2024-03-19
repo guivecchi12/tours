@@ -47,6 +47,8 @@ app.use(
           'ws://127.0.0.1:*',
           'http://127.0.0.1:*',
           'http://localhost:*',
+          'https://tours-jud7zotef-gui-vecchis-projects.vercel.app',
+          'https://https://my-tours-website.vercel.app',
           'https://*.tiles.mapbox.com',
           'https://api.mapbox.com',
           'https://events.mapbox.com'
