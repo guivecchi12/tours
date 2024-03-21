@@ -5,12 +5,14 @@ const {
   getLoginForm,
   getAccount,
   updateUserData,
-  getMyTours
+  getMyTours,
+  alerts
 } = require('../controllers/viewsController')
 const authController = require('../controllers/authController')
-const bookingController = require('../controllers/bookingController')
 
 const router = express.Router()
+
+router.use(alerts)
 
 router.get('/', authController.isLoggedIn, getOverview)
 
