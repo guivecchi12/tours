@@ -16,6 +16,7 @@ const tourRouter = require('./routes/tourRoutes')
 const userRouter = require('./routes/userRoutes')
 const reviewRouter = require('./routes/reviewRoutes')
 const bookingRouter = require('./routes/bookingRoutes')
+const bookingController = require('./controllers/bookingRoutes')
 const viewRouter = require('./routes/viewRouters')
 
 const app = express()
@@ -27,11 +28,13 @@ app.set('views', path.join(__dirname, 'views'))
 
 // GLOBAL Middlewares
 // Implement CORS
-app.use(
-  cors({
-    origin: 'https://www.gvecchi.com'
-  })
-)
+// app.use(
+//   cors({
+//     origin: 'https://www.gvecchi.com'
+//   })
+// )
+
+// app.options('*', cors()) // for post, put, patch, delete
 
 // Serving static files
 app.use(express.static(path.join(__dirname, 'public')))
@@ -83,6 +86,12 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again in an hour!'
 })
 app.use('/api', limiter)
+
+app.post(
+  '/webhook-checkout',
+  express.raw({ type: 'application/json' }),
+  bookingController.webhookCheckout
+)
 
 // Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' })) //limit body size to 10kb

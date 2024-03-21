@@ -12,12 +12,7 @@ const bookingController = require('../controllers/bookingController')
 
 const router = express.Router()
 
-router.get(
-  '/',
-  bookingController.createBookingCheckout,
-  authController.isLoggedIn,
-  getOverview
-)
+router.get('/', authController.isLoggedIn, getOverview)
 
 router.get('/tour/:slug', authController.isLoggedIn, getTour)
 
