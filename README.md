@@ -1,4 +1,4 @@
-Deployed on Vercel: https://tours-dm99.onrender.com/
+Deployed on Render: https://tours-dm99.onrender.com/
 
 Project Description
 
