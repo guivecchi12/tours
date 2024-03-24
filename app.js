@@ -28,6 +28,7 @@ app.set('views', path.join(__dirname, 'views'))
 
 // GLOBAL Middlewares
 // Implement CORS
+// app.use(cors())
 // app.use(
 //   cors({
 //     origin: 'https://www.gvecchi.com'
