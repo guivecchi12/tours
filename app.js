@@ -8,7 +8,6 @@ const mongoSanitize = require('express-mongo-sanitize')
 const xss = require('xss-clean')
 const hpp = require('hpp')
 const cookieParser = require('cookie-parser')
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 // const cors = require('cors')
 
 const AppError = require('./utils/appError')
@@ -88,7 +87,7 @@ app.use('/api', limiter)
 
 // Stripe webhook, BEFORE body-parser, because stripe needs the body as stream
 app.post(
-  '/webhook',
+  '/webhook-checkout',
   express.raw({ type: 'application/json' }),
   bookingController.webhookCheckout
 )

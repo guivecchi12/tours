@@ -10,17 +10,18 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   const tour = await Tour.findById(req.params.tourId)
 
   // Create checkout session
+
   const session = await stripe.checkout.sessions.create({
-    mode: 'payment',
-    payment_method_types: ['card'],
     success_url: `${req.protocol}://${req.get('host')}/my-tours?alert=booking`,
+    mode: 'payment',
     cancel_url: `${req.protocol}://${req.get('host')}/tour/${tour.slug}`,
-    customer_email: req.user.email,
     client_reference_id: req.params.tourId,
+    customer_email: req.user.email,
     line_items: [
       {
+        quantity: 1,
         price_data: {
-          currency: 'usd',
+          unit_amount: tour.price * 100,
           product_data: {
             name: `${tour.name} Tour`,
             description: tour.summary,
@@ -28,11 +29,11 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
               `${req.protocol}://${req.get('host')}/img/tours/${tour.imageCover}`
             ]
           },
-          unit_amount: tour.price * 100
-        },
-        quantity: 1
+          currency: 'usd'
+        }
       }
-    ]
+    ],
+    payment_method_types: ['card']
   })
 
   // Create session response
@@ -55,6 +56,8 @@ exports.webhookCheckout = async (req, res, next) => {
   const signature = req.headers['stripe-signature']
   let event = {}
 
+  console.log('---signature---', signature)
+
   if (process.env.STRIPE_WEBHOOK_SECRET) {
     try {
       // console.log('Attempting to construct Event')
@@ -68,10 +71,14 @@ exports.webhookCheckout = async (req, res, next) => {
       return res.status(400).send(`Webhook Error: ${err.message}`)
     }
   }
-  // console.log('Construct Event successful', event)
-  if (event.type === 'checkout.session.completed') {
+  console.log('Construct Event successful', event)
+  if (
+    event.type === 'checkout.session.completed' ||
+    event.type === 'charge.succeeded'
+  ) {
     createBookingCheckout(event.data.object)
   }
+
   res.status(200).json({ received: true })
 }
 

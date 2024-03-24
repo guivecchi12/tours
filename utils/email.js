@@ -16,7 +16,7 @@ module.exports = class Email {
       // Sendgrid
       return nodemailer.createTransport(
         nodemailerSendgrid({
-          apiKey: process.env.SENDGRID_PASSWORD
+          apiKey: process.env.SENDGRID_API_KEY
         })
       )
     }
