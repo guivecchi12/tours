@@ -3,6 +3,7 @@ const {
   getOverview,
   getTour,
   getLoginForm,
+  getSignupForm,
   getAccount,
   updateUserData,
   getMyTours,
@@ -19,6 +20,8 @@ router.get('/', authController.isLoggedIn, getOverview)
 router.get('/tour/:slug', authController.isLoggedIn, getTour)
 
 router.get('/login', authController.isLoggedIn, getLoginForm)
+
+router.get('/signup', authController.isLoggedIn, getSignupForm)
 
 router.get('/me', authController.protectRoute, getAccount)
 
