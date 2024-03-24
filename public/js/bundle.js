@@ -12130,8 +12130,7 @@ var signup = exports.signup = /*#__PURE__*/function () {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           _context.prev = 0;
-          console.log('signup -->', name, email, password, passwordConfirmation);
-          _context.next = 4;
+          _context.next = 3;
           return (0, _axios.default)({
             method: 'POST',
             url: '/api/v1/users/signup',
@@ -12142,7 +12141,7 @@ var signup = exports.signup = /*#__PURE__*/function () {
               passwordConfirmation: passwordConfirmation
             }
           });
-        case 4:
+        case 3:
           res = _context.sent;
           if (res.data.status === 'success') {
             (0, _alerts.showAlert)('success', 'Account created successfully!');
@@ -12150,17 +12149,17 @@ var signup = exports.signup = /*#__PURE__*/function () {
               location.assign('/');
             }, 1500);
           }
-          _context.next = 11;
+          _context.next = 10;
           break;
-        case 8:
-          _context.prev = 8;
+        case 7:
+          _context.prev = 7;
           _context.t0 = _context["catch"](0);
-          (0, _alerts.showAlert)('error', _context.t0.response.data.message);
-        case 11:
+          (0, _alerts.showAlert)('error', _context.t0.response.message, 8);
+        case 10:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 8]]);
+    }, _callee, null, [[0, 7]]);
   }));
   return function signup(_x, _x2, _x3, _x4) {
     return _ref.apply(this, arguments);

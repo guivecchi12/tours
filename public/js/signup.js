@@ -5,7 +5,6 @@ import { showAlert } from './alerts'
 
 export const signup = async (name, email, password, passwordConfirmation) => {
   try {
-    console.log('signup -->', name, email, password, passwordConfirmation)
     const res = await axios({
       method: 'POST',
       url: '/api/v1/users/signup',
@@ -23,6 +22,6 @@ export const signup = async (name, email, password, passwordConfirmation) => {
       }, 1500)
     }
   } catch (err) {
-    showAlert('error', err.response.data.message)
+    showAlert('error', err.response.message, 8)
   }
 }
