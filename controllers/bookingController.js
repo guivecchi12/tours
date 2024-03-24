@@ -53,17 +53,20 @@ const createBookingCheckout = async (session) => {
 exports.webhookCheckout = async (req, res, next) => {
   // console.log('----> Entering WebhookCheckout', req.headers)
   const signature = req.headers['stripe-signature']
-  let event
-  try {
-    // console.log('Attempting to construct Event')
-    event = stripe.webhooks.constructEvent(
-      req.body,
-      signature,
-      process.env.STRIPE_WEBHOOK_SECRET
-    )
-  } catch (err) {
-    console.log('Failed to create booking', err.message)
-    return res.status(400).send(`Webhook Error: ${err.message}`)
+  let event = {}
+
+  if (process.env.STRIPE_WEBHOOK_SECRET) {
+    try {
+      // console.log('Attempting to construct Event')
+      event = stripe.webhooks.constructEvent(
+        req.body,
+        signature,
+        process.env.STRIPE_WEBHOOK_SECRET
+      )
+    } catch (err) {
+      console.log(`⚠️  Webhook signature verification failed. ${err.message}`)
+      return res.status(400).send(`Webhook Error: ${err.message}`)
+    }
   }
   // console.log('Construct Event successful', event)
   if (event.type === 'checkout.session.completed') {
