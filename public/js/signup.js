@@ -22,6 +22,6 @@ export const signup = async (name, email, password, passwordConfirmation) => {
       }, 1500)
     }
   } catch (err) {
-    showAlert('error', err.response.message, 8)
+    showAlert('error', err.response.data.message, 8)
   }
 }
