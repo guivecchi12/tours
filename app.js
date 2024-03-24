@@ -8,6 +8,7 @@ const mongoSanitize = require('express-mongo-sanitize')
 const xss = require('xss-clean')
 const hpp = require('hpp')
 const cookieParser = require('cookie-parser')
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 // const cors = require('cors')
 
 const AppError = require('./utils/appError')
@@ -21,7 +22,7 @@ const viewRouter = require('./routes/viewRouters')
 
 const app = express()
 
-app.enable('trust proxy')
+// app.enable('trust proxy')
 
 app.set('view engine', 'pug')
 app.set('views', path.join(__dirname, 'views'))
@@ -60,8 +61,6 @@ app.use(
           'ws://127.0.0.1:*',
           'http://127.0.0.1:*',
           'http://localhost:*',
-          'https://tours-jud7zotef-gui-vecchis-projects.vercel.app',
-          'https://https://my-tours-website.vercel.app',
           'https://*.tiles.mapbox.com',
           'https://api.mapbox.com',
           'https://events.mapbox.com'
@@ -87,6 +86,7 @@ const limiter = rateLimit({
 })
 app.use('/api', limiter)
 
+// Stripe webhook, BEFORE body-parser, because stripe needs the body as stream
 app.post(
   '/webhook-checkout',
   express.raw({ type: 'application/json' }),

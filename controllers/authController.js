@@ -22,7 +22,7 @@ const createSendToken = (user, statusCode, req, res) => {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000 // time in milliseconds
     ),
-    secure: req.secure || req.headers('x-forwarded-proto') === 'https', // only send in secure https calls (this should only be set in PROD since localhost is a http route)
+    secure: req.secure || req.headers['x-forwarded-proto'] === 'https', // only send in secure https calls (this should only be set in PROD since localhost is a http route)
     httpOnly: true // protect from site scrypting attacks. It will receive, store and send, not allowing for any middle man
   })
 
