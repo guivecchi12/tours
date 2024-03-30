@@ -1,5 +1,4 @@
 const nodemailer = require('nodemailer')
-const nodemailerSendgrid = require('nodemailer-sendgrid')
 const pug = require('pug')
 const htmlToText = require('html-to-text')
 
@@ -13,21 +12,15 @@ module.exports = class Email {
 
   newTransport() {
     if (process.env.NODE_ENV === 'production') {
-      // Sendgrid
-      return nodemailer.createTransport(
-        nodemailerSendgrid({
-          apiKey: process.env.SENDGRID_API_KEY
-        })
-      )
+      return nodemailer.createTransport({
+        host: 'smtp-relay.brevo.com',
+        port: 587,
+        auth: {
+          user: process.env.BREVO_USER,
+          pass: process.env.BREVO_SMTP_KEY
+        }
+      })
     }
-    return nodemailer.createTransport({
-      host: process.env.EMAIL_HOST,
-      port: process.env.EMAIL_PORT,
-      auth: {
-        user: process.env.EMAIL_USERNAME,
-        pass: process.env.EMAIL_PASSWORD
-      }
-    })
   }
 
   //Send the actual email
@@ -51,7 +44,13 @@ module.exports = class Email {
       text: htmlToText.convert(html)
     }
 
-    await this.newTransport().sendMail(mailOption)
+    await this.newTransport().sendMail(mailOption, (error, info) => {
+      if (error) {
+        console.log('error in email creation', error)
+      } else {
+        console.log('email sent: ', info.response)
+      }
+    })
   }
 
   async sendWelcome() {
